@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+        footer {
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        section {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        form input, form button, form textarea {
+            padding: 0.8rem;
+            margin: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            width: 300px;
+        }
+        form input[type="text"], form input[type="email"] {
+            width: 300px;
+        }
+        form textarea {
+            width: 300px;
+            height: 120px;
+        }
+        form button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        #weather-result {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .city-list {
+            margin-top: 1rem;
+            list-style-type: none;
+            padding: 0;
+        }
+        .city-list li {
+            background-color: #007BFF;
+            color: white;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+        }
+        .city-list li:hover {
+            background-color: #0056b3;
+            cursor: pointer;
+        }
+        .about-content {
+            background-color: #ffcccb;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .city-list li:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="javascript:void(0)" onclick="showPage('home')">Home</a></li>
+                <li><a href="javascript:void(0)" onclick="showPage('about')">About</a></li>
+                <li><a href="javascript:void(0)" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Page -->
+        <section id="home" class="active">
+            <h1>Welcome to the Weather App</h1>
+            <p>Get real-time weather updates for your city!</p>
+            <form id="weather-form">
+                <input type="text" id="city" placeholder="Enter City" required>
+                <button type="submit">Get Weather</button>
+            </form>
+            <div id="weather-result"></div>
+
+            <h2>Popular Cities</h2>
+            <ul class="city-list">
+                <li onclick="setCity('New York')">New York</li>
+                <li onclick="setCity('London')">London</li>
+                <li onclick="setCity('Tokyo')">Tokyo</li>
+                <li onclick="setCity('Sydney')">Sydney</li>
+                <li onclick="setCity('Paris')">Paris</li>
+            </ul>
+        </section>
+
+        <!-- About Page -->
+        <section id="about">
+            <h1>About Us</h1>
+            <div class="about-content">
+                <p>The Weather App provides accurate and real-time weather updates for cities worldwide. Powered by modern APIs and designed with simplicity in mind, we aim to give you fast and reliable weather information. Please ensure you enter the city correctly to receive accurate updates. Thank you for using our app!</p>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="contact">
+            <h1>Contact Us</h1>
+            <form>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Weather App. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to switch between pages
+        function showPage(page) {
+            const pages = document.querySelectorAll('section');
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(page).classList.add('active');
+        }
+
+        // Weather API Simulation (simple example)
+        document.getElementById('weather-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const city = document.getElementById('city').value;
+            const result = document.getElementById('weather-result');
+
+            if (city.trim() === "") {
+                result.innerHTML = "<p>Please enter a city name!</p>";
+                return;
+            }
+
+            result.innerHTML = `<p>Fetching weather data for <strong>${city}</strong>...</p>`;
+            setTimeout(() => {
+                result.innerHTML = `<p>The current weather in <strong>${city}</strong> is 25°C with clear skies.</p>`;
+            }, 2000);
+        });
+
+        // Set the city when a popular city is clicked
+        function setCity(city) {
+            document.getElementById('city').value = city;
+            document.getElementById('weather-form').submit();
+        }
+    </script>
+</body>
+</html>
